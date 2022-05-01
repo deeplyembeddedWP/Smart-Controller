@@ -1,0 +1,68 @@
+
+.vs/Smart Controller/v14/.atsuo
+.vs/Smart Controller/v14/.atsuo
+Smart Controller/Debug/atmel_start.o
+Smart Controller/Debug/Device_Startup/startup_same54.o
+Smart Controller/Debug/Device_Startup/system_same54.o
+Smart Controller/Debug/driver_init.o
+Smart Controller/Debug/examples/driver_examples.o
+Smart Controller/Debug/hal/src/hal_atomic.o
+Smart Controller/Debug/hal/src/hal_cache.o
+Smart Controller/Debug/hal/src/hal_delay.o
+Smart Controller/Debug/hal/src/hal_gpio.o
+Smart Controller/Debug/hal/src/hal_init.o
+Smart Controller/Debug/hal/src/hal_io.o
+Smart Controller/Debug/hal/src/hal_sleep.o
+Smart Controller/Debug/hal/src/hal_usart_os.o
+Smart Controller/Debug/hal/utils/src/utils_assert.o
+Smart Controller/Debug/hal/utils/src/utils_event.o
+Smart Controller/Debug/hal/utils/src/utils_list.o
+Smart Controller/Debug/hal/utils/src/utils_ringbuffer.o
+Smart Controller/Debug/hal/utils/src/utils_syscalls.o
+Smart Controller/Debug/hpl/cmcc/hpl_cmcc.o
+Smart Controller/Debug/hpl/core/hpl_core_m4.o
+Smart Controller/Debug/hpl/core/hpl_init.o
+Smart Controller/Debug/hpl/dmac/hpl_dmac.o
+Smart Controller/Debug/hpl/gclk/hpl_gclk.o
+Smart Controller/Debug/hpl/mclk/hpl_mclk.o
+Smart Controller/Debug/hpl/osc32kctrl/hpl_osc32kctrl.o
+Smart Controller/Debug/hpl/oscctrl/hpl_oscctrl.o
+Smart Controller/Debug/hpl/pm/hpl_pm.o
+Smart Controller/Debug/hpl/ramecc/hpl_ramecc.o
+Smart Controller/Debug/hpl/sercom/hpl_sercom.o
+Smart Controller/Debug/lib/Cellular Interface/Modules/bg96/cellular_bg96.o
+Smart Controller/Debug/lib/Cellular Interface/Modules/bg96/cellular_bg96_api.o
+Smart Controller/Debug/lib/Cellular Interface/Modules/bg96/cellular_bg96_urc_handler.o
+Smart Controller/Debug/lib/Cellular Interface/Modules/bg96/cellular_bg96_wrapper.o
+Smart Controller/Debug/lib/Cellular Interface/source/cellular_3gpp_api.o
+Smart Controller/Debug/lib/Cellular Interface/source/cellular_3gpp_urc_handler.o
+Smart Controller/Debug/lib/Cellular Interface/source/cellular_at_core.o
+Smart Controller/Debug/lib/Cellular Interface/source/cellular_common.o
+Smart Controller/Debug/lib/Cellular Interface/source/cellular_common_api.o
+Smart Controller/Debug/lib/Cellular Interface/source/cellular_pkthandler.o
+Smart Controller/Debug/lib/Cellular Interface/source/cellular_pktio.o
+Smart Controller/Debug/lib/coreMQTT/source/core_mqtt.o
+Smart Controller/Debug/lib/coreMQTT/source/core_mqtt_serializer.o
+Smart Controller/Debug/lib/coreMQTT/source/core_mqtt_state.o
+Smart Controller/Debug/main.d
+Smart Controller/Debug/main.o
+Smart Controller/Debug/rtos_start.o
+Smart Controller/Debug/source/cellular/cellular_platform.o
+Smart Controller/Debug/source/cellular_setup.o
+Smart Controller/Debug/source/comm_if_same54.o
+Smart Controller/Debug/source/logging/iot_logging_helper_fxns.o
+Smart Controller/Debug/source/logging/iot_logging_task_dynamic_buffers.o
+Smart Controller/Debug/stdio_redirect/gcc/read.o
+Smart Controller/Debug/stdio_redirect/gcc/write.o
+Smart Controller/Debug/stdio_redirect/stdio_io.o
+Smart Controller/Debug/stdio_start.o
+Smart Controller/Debug/thirdparty/RTOS/freertos/FreeRTOSV10.0.0/rtos_port.o
+Smart Controller/Debug/thirdparty/RTOS/freertos/FreeRTOSV10.0.0/Source/croutine.o
+Smart Controller/Debug/thirdparty/RTOS/freertos/FreeRTOSV10.0.0/Source/event_groups.o
+Smart Controller/Debug/thirdparty/RTOS/freertos/FreeRTOSV10.0.0/Source/list.o
+Smart Controller/Debug/thirdparty/RTOS/freertos/FreeRTOSV10.0.0/Source/portable/GCC/ARM_CM4F/port.o
+Smart Controller/Debug/thirdparty/RTOS/freertos/FreeRTOSV10.0.0/Source/portable/MemMang/heap_4.o
+Smart Controller/Debug/thirdparty/RTOS/freertos/FreeRTOSV10.0.0/Source/queue.o
+Smart Controller/Debug/thirdparty/RTOS/freertos/FreeRTOSV10.0.0/Source/stream_buffer.o
+Smart Controller/Debug/thirdparty/RTOS/freertos/FreeRTOSV10.0.0/Source/tasks.o
+Smart Controller/Debug/thirdparty/RTOS/freertos/FreeRTOSV10.0.0/Source/timers.o
