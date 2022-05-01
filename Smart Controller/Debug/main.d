@@ -183,7 +183,11 @@ main.d main.o: .././main.c ../atmel_start.h ../driver_init.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\types.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h \
  ../stdio_redirect/stdio_io.h ../examples/driver_examples.h \
- ../source/cellular_setup.h ../source/logging/iot_logging_task.h
+ ../source/cellular_setup.h ../source/logging/iot_logging_task.h \
+ ../source/cellular/bg96/cellular_config.h \
+ ../source/logging/logging_levels.h ../source/logging/logging_stack.h \
+ ../source/logging/logging_levels.h ../source/logging/iot_logging_task.h \
+ ../lib/Cellular\ Interface/source/include/cellular_config_defaults.h
 
 ../atmel_start.h:
 
@@ -644,3 +648,15 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../source/cellular_setup.h:
 
 ../source/logging/iot_logging_task.h:
+
+../source/cellular/bg96/cellular_config.h:
+
+../source/logging/logging_levels.h:
+
+../source/logging/logging_stack.h:
+
+../source/logging/logging_levels.h:
+
+../source/logging/iot_logging_task.h:
+
+../lib/Cellular\ Interface/source/include/cellular_config_defaults.h:
