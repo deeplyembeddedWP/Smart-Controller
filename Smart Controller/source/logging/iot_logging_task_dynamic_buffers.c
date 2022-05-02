@@ -430,6 +430,7 @@ void vLoggingPrintf( const char * pcFormat,
     va_list args;
 
     va_start( args, pcFormat );
+	// pass log config as none, this will be override by logInfo,logError or logDebug.
     prvLoggingPrintfCommon( LOG_NONE, NULL, 0, pcFormat, args );
 
     va_end( args );

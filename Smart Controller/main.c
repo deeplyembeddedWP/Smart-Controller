@@ -3,6 +3,12 @@
 #include "cellular_setup.h"
 #include "iot_logging_task.h"
 
+#ifndef CELLULAR_DO_NOT_USE_CUSTOM_CONFIG
+    /* Include custom config file before other headers. */
+    #include "cellular_config.h"
+#endif
+#include "cellular_config_defaults.h"
+
 #define TASK1_STACK_SIZE				(640 / sizeof(portSTACK_TYPE))
 #define TASK1_PRIORITY					(tskIDLE_PRIORITY + 1)
 
@@ -24,8 +30,7 @@ static void CellularDemoTask(void *pvParameters);
  * used by the Idle task. */
 void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer,
                                     StackType_t ** ppxIdleTaskStackBuffer,
-                                    uint32_t * pulIdleTaskStackSize )
-{
+                                    uint32_t * pulIdleTaskStackSize ){
     /* If the buffers to be provided to the Idle task are declared inside this
      * function then they must be declared static - otherwise they will be allocated on
      * the stack and so not exists after this function exits. */
@@ -50,8 +55,7 @@ void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer,
  * to provide the memory that is used by the Timer service task. */
 void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer,
                                      StackType_t ** ppxTimerTaskStackBuffer,
-                                     uint32_t * pulTimerTaskStackSize )
-{
+                                     uint32_t * pulTimerTaskStackSize ){
     /* If the buffers to be provided to the Timer task are declared inside this
      * function then they must be declared static - otherwise they will be allocated on
      * the stack and so not exists after this function exits. */
@@ -99,7 +103,7 @@ static void CellularDemoTask(void *pvParameters){
 	// Setup cellular
 	retCellular = setupCellular();
 	if(!retCellular){
-		configPRINTF( ( "Cellular failed to initialize." ) );
+		LogError( ( "Cellular failed to initialize." ) );
 	}
 	
 	//configASSERT( retCellular == true ); // Stop here if we fail to initialize cellular.
@@ -107,7 +111,7 @@ static void CellularDemoTask(void *pvParameters){
 	
 	while(1){
 		UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
-		configPRINTF(("[CellularDemoTask], Stack: %lu", uxHighWaterMark*4));
+		LogInfo(("[CellularDemoTask], Stack: %lu", uxHighWaterMark*4));
 		vTaskDelay(1000);
 	}
 	
@@ -129,9 +133,9 @@ int main(void)
 	}
 	
 	/* Spawn the example task */
-	if (xTaskCreate(TARGET_IO_example_task, "Task1", TASK1_STACK_SIZE, NULL, TASK1_PRIORITY, &task1_handler) != pdPASS) {
-		while (1);
-	}
+//	if (xTaskCreate(TARGET_IO_example_task, "Task1", TASK1_STACK_SIZE, NULL, TASK1_PRIORITY, &task1_handler) != pdPASS) {
+//		while (1);
+//	}
 	
 	vTaskStartScheduler();
 	

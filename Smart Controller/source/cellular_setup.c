@@ -81,12 +81,12 @@ bool setupCellular( void )
                 ( ( simStatus.simCardState == CELLULAR_SIM_CARD_INSERTED ) &&
                   ( simStatus.simCardLockState == CELLULAR_SIM_CARD_READY ) ) )
             {
-                configPRINTF( ( ">>>  Cellular SIM okay  <<<\r\n" ) );
+                LogInfo( ( ">>>  Cellular SIM okay  <<<\r\n" ) );
                 break;
             }
             else
             {
-                configPRINTF( ( ">>>  Cellular SIM card state %d, Lock State %d <<<\r\n",
+                LogInfo( ( ">>>  Cellular SIM card state %d, Lock State %d <<<\r\n",
                                 simStatus.simCardState,
                                 simStatus.simCardLockState ) );
             }
@@ -102,7 +102,7 @@ bool setupCellular( void )
     }
     else
     {
-        configPRINTF( ( ">>>  Cellular SIM failure  <<<\r\n" ) );
+        LogError( ( ">>>  Cellular SIM failure  <<<\r\n" ) );
     }
 
     /* Rescan network. */
@@ -127,12 +127,12 @@ bool setupCellular( void )
                 ( ( serviceStatus.psRegistrationStatus == REGISTRATION_STATUS_REGISTERED_HOME) ||
                   ( serviceStatus.psRegistrationStatus == REGISTRATION_STATUS_ROAMING_REGISTERED) ) )
             {
-                configPRINTF( ( ">>>  Cellular module registered  <<<\r\n" ) );
+                LogInfo( ( ">>>  Cellular module registered  <<<\r\n" ) );
                 break;
             }
             else
             {
-                configPRINTF( ( ">>>  Cellular GetServiceStatus failed %d, ps registration status %d  <<<\r\n",
+                LogError( ( ">>>  Cellular GetServiceStatus failed %d, ps registration status %d  <<<\r\n",
                                 cellularStatus, serviceStatus.psRegistrationStatus ) );
             }
 
@@ -140,7 +140,7 @@ bool setupCellular( void )
 
             if( timeoutCount >= timeoutCountLimit )
             {
-                configPRINTF( ( ">>>  Cellular module can't be registered  <<<\r\n" ) );
+                LogError( ( ">>>  Cellular module can't be registered  <<<\r\n" ) );
             }
 
             vTaskDelay( pdMS_TO_TICKS( CELLULAR_PDN_CONNECT_WAIT_INTERVAL_MS ) );
@@ -164,7 +164,7 @@ bool setupCellular( void )
 
     if( ( cellularStatus == CELLULAR_SUCCESS ) && ( PdnStatusBuffers.state == 1 ) )
     {
-        configPRINTF( ( ">>>  Cellular module registered, IP address %s  <<<\r\n", localIP ) );
+        LogInfo( ( ">>>  Cellular module registered, IP address %s  <<<\r\n", localIP ) );
         cellularRet = true;
     }
     else
