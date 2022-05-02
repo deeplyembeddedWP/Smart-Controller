@@ -15106,7 +15106,7 @@ void vLoggingPrintf( const char * pcFormat,
 
     va_start( args, pcFormat );
     5c08:	9203      	str	r2, [sp, #12]
-	// pass log config as none, 
+	// pass log config as none, this will be override by logInfo,logError or logDebug.
     prvLoggingPrintfCommon( LOG_NONE, NULL, 0, pcFormat, args );
     5c0a:	9200      	str	r2, [sp, #0]
     5c0c:	2200      	movs	r2, #0
