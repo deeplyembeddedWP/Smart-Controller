@@ -50,10 +50,7 @@ CellularHandle_t CellularHandle = NULL;
 /* User of secure sockets cellular should provide this variable. */
 uint8_t CellularSocketPdnContextId = CELLULAR_PDN_CONTEXT_ID;
 
-/*-----------------------------------------------------------*/
-
-bool setupCellular( void )
-{
+bool setupCellular( void ){
     bool cellularRet = true;
     CellularError_t cellularStatus = CELLULAR_SUCCESS;
     CellularSimCardStatus_t simStatus = { 0 };
@@ -70,109 +67,78 @@ bool setupCellular( void )
     /* Initialize Cellular Comm Interface. */
     cellularStatus = Cellular_Init( &CellularHandle, pCommIntf );
 
-    if( cellularStatus == CELLULAR_SUCCESS )
-    {
+    if( cellularStatus == CELLULAR_SUCCESS ){
         /* wait until SIM is ready */
-        for( tries = 0; tries < CELLULAR_MAX_SIM_RETRY; tries++ )
-        {
+        for( tries = 0; tries < CELLULAR_MAX_SIM_RETRY; tries++ ){
             cellularStatus = Cellular_GetSimCardStatus( CellularHandle, &simStatus );
-
-            if( ( cellularStatus == CELLULAR_SUCCESS ) &&
-                ( ( simStatus.simCardState == CELLULAR_SIM_CARD_INSERTED ) &&
-                  ( simStatus.simCardLockState == CELLULAR_SIM_CARD_READY ) ) )
-            {
+            if((cellularStatus == CELLULAR_SUCCESS) && ((simStatus.simCardState == CELLULAR_SIM_CARD_INSERTED ) &&
+                  ( simStatus.simCardLockState == CELLULAR_SIM_CARD_READY ) ) ){
                 LogInfo( ( ">>>  Cellular SIM okay  <<<\r\n" ) );
                 break;
+            }else{
+                LogInfo( ( ">>>  Cellular SIM card state %d, Lock State %d <<<\r\n",simStatus.simCardState, simStatus.simCardLockState ) );
             }
-            else
-            {
-                LogInfo( ( ">>>  Cellular SIM card state %d, Lock State %d <<<\r\n",
-                                simStatus.simCardState,
-                                simStatus.simCardLockState ) );
-            }
-
             vTaskDelay( pdMS_TO_TICKS( CELLULAR_SIM_CARD_WAIT_INTERVAL_MS ) );
         }
     }
 
     /* Setup the PDN config. */
-    if( cellularStatus == CELLULAR_SUCCESS )
-    {
+    if( cellularStatus == CELLULAR_SUCCESS ){
         cellularStatus = Cellular_SetPdnConfig( CellularHandle, CellularSocketPdnContextId, &pdnConfig );
-    }
-    else
-    {
+    }else{
         LogError( ( ">>>  Cellular SIM failure  <<<\r\n" ) );
     }
 
     /* Rescan network. */
-    if( cellularStatus == CELLULAR_SUCCESS )
-    {
+    if( cellularStatus == CELLULAR_SUCCESS ){
         cellularStatus = Cellular_RfOff( CellularHandle );
     }
 
-    if( cellularStatus == CELLULAR_SUCCESS )
-    {
+    if( cellularStatus == CELLULAR_SUCCESS ){
         cellularStatus = Cellular_RfOn( CellularHandle );
     }
 
     /* Get service status. */
-    if( cellularStatus == CELLULAR_SUCCESS )
-    {
-        while( timeoutCount < timeoutCountLimit )
-        {
+    if( cellularStatus == CELLULAR_SUCCESS ){
+        while( timeoutCount < timeoutCountLimit ){
             cellularStatus = Cellular_GetServiceStatus( CellularHandle, &serviceStatus );
 
-            if( ( cellularStatus == CELLULAR_SUCCESS ) &&
-                ( ( serviceStatus.psRegistrationStatus == REGISTRATION_STATUS_REGISTERED_HOME) ||
-                  ( serviceStatus.psRegistrationStatus == REGISTRATION_STATUS_ROAMING_REGISTERED) ) )
-            {
+            if((cellularStatus == CELLULAR_SUCCESS) && ((serviceStatus.psRegistrationStatus == REGISTRATION_STATUS_REGISTERED_HOME) ||
+                  (serviceStatus.psRegistrationStatus == REGISTRATION_STATUS_ROAMING_REGISTERED))){
                 LogInfo( ( ">>>  Cellular module registered  <<<\r\n" ) );
                 break;
-            }
-            else
-            {
-                LogError( ( ">>>  Cellular GetServiceStatus failed %d, ps registration status %d  <<<\r\n",
-                                cellularStatus, serviceStatus.psRegistrationStatus ) );
+            }else{
+                LogError( ( ">>>  Cellular GetServiceStatus failed %d, ps registration status %d  <<<\r\n",cellularStatus, serviceStatus.psRegistrationStatus ) );
             }
 
             timeoutCount++;
 
-            if( timeoutCount >= timeoutCountLimit )
-            {
+            if( timeoutCount >= timeoutCountLimit ){
                 LogError( ( ">>>  Cellular module can't be registered  <<<\r\n" ) );
             }
-
             vTaskDelay( pdMS_TO_TICKS( CELLULAR_PDN_CONNECT_WAIT_INTERVAL_MS ) );
-        }
+        }//while(timeout)
     }
 
-    if( cellularStatus == CELLULAR_SUCCESS )
-    {
+    if( cellularStatus == CELLULAR_SUCCESS ){
         cellularStatus = Cellular_ActivatePdn( CellularHandle, CellularSocketPdnContextId );
     }
 
-    if( cellularStatus == CELLULAR_SUCCESS )
-    {
+    if( cellularStatus == CELLULAR_SUCCESS ){
         cellularStatus = Cellular_GetIPAddress( CellularHandle, CellularSocketPdnContextId, localIP, sizeof( localIP ) );
     }
 
-    if( cellularStatus == CELLULAR_SUCCESS )
-    {
+    if( cellularStatus == CELLULAR_SUCCESS ){
         cellularStatus = Cellular_GetPdnStatus( CellularHandle, &PdnStatusBuffers, CellularSocketPdnContextId, &NumStatus );
     }
 
-    if( ( cellularStatus == CELLULAR_SUCCESS ) && ( PdnStatusBuffers.state == 1 ) )
-    {
+    if( ( cellularStatus == CELLULAR_SUCCESS ) && ( PdnStatusBuffers.state == 1 ) ){
         LogInfo( ( ">>>  Cellular module registered, IP address %s  <<<\r\n", localIP ) );
         cellularRet = true;
-    }
-    else
-    {
+    }else{
         cellularRet = false;
     }
 
     return cellularRet;
 }
 
-/*-----------------------------------------------------------*/

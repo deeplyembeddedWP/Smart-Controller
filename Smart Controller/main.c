@@ -1,7 +1,7 @@
 #include <atmel_start.h>
-#include "driver_examples.h"
 #include "cellular_setup.h"
 #include "iot_logging_task.h"
+#include "user_modules/asf_driver_init.h"
 
 #ifndef CELLULAR_DO_NOT_USE_CUSTOM_CONFIG
     /* Include custom config file before other headers. */
@@ -9,8 +9,8 @@
 #endif
 #include "cellular_config_defaults.h"
 
-#define TASK1_STACK_SIZE				(640 / sizeof(portSTACK_TYPE))
-#define TASK1_PRIORITY					(tskIDLE_PRIORITY + 1)
+#define TEST_TASK_STACK_SIZE				(640 / sizeof(portSTACK_TYPE))
+#define TEST_TASK_PRIORITY					(tskIDLE_PRIORITY + 1)
 
 #define CELLULAR_TASK_SIZE				(1300 / sizeof(portSTACK_TYPE))
 #define CELLULAR_TASK_PRIORITY			(tskIDLE_PRIORITY + 1)
@@ -19,7 +19,7 @@
 #define LOGGING_MESSAGE_QUEUE_LENGTH    ( 1024 )
 #define LOGGING_TASK_PRIORITY			(tskIDLE_PRIORITY + 0)
 
-static TaskHandle_t	task1_handler, cellular_task_handler;
+static TaskHandle_t	test_task_handler, cellular_task_handler;
 
 static void CellularDemoTask(void *pvParameters);
 
@@ -106,15 +106,7 @@ static void CellularDemoTask(void *pvParameters){
 		LogError( ( "Cellular failed to initialize." ) );
 	}
 	
-	//configASSERT( retCellular == true ); // Stop here if we fail to initialize cellular.
-	//vTaskSuspend(NULL);
-	
-	while(1){
-		UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
-		LogInfo(("[CellularDemoTask], Stack: %lu", uxHighWaterMark*4));
-		vTaskDelay(1000);
-	}
-	
+	vTaskDelete( NULL ); // delete task irrespective
 }
 
 int main(void)
@@ -131,11 +123,11 @@ int main(void)
 	if (xTaskCreate(CellularDemoTask, "Cell", CELLULAR_TASK_SIZE, NULL, CELLULAR_TASK_PRIORITY, &cellular_task_handler) != pdPASS) {
 		while (1);
 	}
-	
-	/* Spawn the example task */
-//	if (xTaskCreate(TARGET_IO_example_task, "Task1", TASK1_STACK_SIZE, NULL, TASK1_PRIORITY, &task1_handler) != pdPASS) {
-//		while (1);
-//	}
+
+	int rc = xTaskCreate(SERCOM1_SPI_0_example_task, "Example", TEST_TASK_STACK_SIZE, NULL, TEST_TASK_PRIORITY, &test_task_handler);
+	if(rc != pdPASS){
+		while(true); // could not create the task
+	}
 	
 	vTaskStartScheduler();
 	
